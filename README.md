@@ -1,2 +1,2 @@
-# Mic-Portfolio
+# Portfolio
 Portfolio for myself
