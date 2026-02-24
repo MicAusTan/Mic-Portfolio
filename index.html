@@ -14,6 +14,9 @@
 </head>
 <body>
 
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
   <!-- LOADER -->
   <div id="loader">
     <div class="loader-hept"></div>
@@ -49,7 +52,7 @@
 
   <!-- NAV -->
   <nav>
-    <a href="#home" class="nav-logo">MAT<span>.</span></a>
+    <a href="#home" class="nav-logo">MAT<span>.</span><span class="nav-eq" id="navEq" aria-hidden="true"><span></span><span></span><span></span><span></span></span></a>
     <ul class="nav-links">
       <li><a href="#home" class="active">Home</a></li>
       <li><a href="#about">About</a></li>
@@ -215,7 +218,7 @@
               </div>
             </div>
             <svg class="orbit-svg" id="orbitSvg" viewBox="0 0 400 400"></svg>
-            <a href="#skills" class="orbit-badge" id="badge0" data-index="0">
+            <a href="#skill-it" class="orbit-badge" id="badge0" data-index="0" data-target="skill-it">
               <svg viewBox="0 0 20 20" width="16" height="16">
                 <rect x="1" y="2" width="18" height="13" rx="2" fill="none" stroke="#00e05a" stroke-width="1.5"/>
                 <line x1="7" y1="19" x2="13" y2="19" stroke="#00e05a" stroke-width="1.5"/>
@@ -223,7 +226,7 @@
               </svg>
               IT Support
             </a>
-            <a href="#skills" class="orbit-badge" id="badge1" data-index="1">
+            <a href="#skill-music" class="orbit-badge" id="badge1" data-index="1" data-target="skill-music">
               <svg viewBox="0 0 20 20" width="16" height="16">
                 <path d="M7 16V4l10-2v12" fill="none" stroke="#00e05a" stroke-width="1.5" stroke-linejoin="round"/>
                 <circle cx="4.5" cy="16" r="2.5" fill="none" stroke="#00e05a" stroke-width="1.5"/>
@@ -231,7 +234,7 @@
               </svg>
               Music
             </a>
-            <a href="#skills" class="orbit-badge" id="badge2" data-index="2">
+            <a href="#skill-photo" class="orbit-badge" id="badge2" data-index="2" data-target="skill-photo">
               <svg viewBox="0 0 20 20" width="16" height="16">
                 <rect x="1" y="1" width="18" height="18" rx="2" fill="none" stroke="#00e05a" stroke-width="1.5"/>
                 <circle cx="6" cy="6" r="2" fill="none" stroke="#00e05a" stroke-width="1.2"/>
@@ -258,7 +261,7 @@
 
       <div class="skills-primary">
         <!-- IT Support -->
-        <div class="skill-card skill-featured reveal">
+        <div class="skill-card skill-featured reveal" id="skill-it">
           <div class="skill-icon-svg">
             <svg viewBox="0 0 48 48" width="32" height="32">
               <rect x="4" y="8" width="40" height="26" rx="4" fill="none" stroke="#00e05a" stroke-width="2"/>
@@ -284,7 +287,7 @@
         </div>
 
         <!-- Music Production -->
-        <div class="skill-card skill-featured reveal reveal-delay-1">
+        <div class="skill-card skill-featured reveal reveal-delay-1" id="skill-music">
           <div class="skill-icon-svg">
             <svg viewBox="0 0 48 48" width="32" height="32">
               <circle cx="14" cy="36" r="6" fill="none" stroke="#00e05a" stroke-width="2"/>
@@ -349,7 +352,7 @@
         </div>
 
         <!-- Photo Editing -->
-        <div class="skill-card skill-featured reveal reveal-delay-2">
+        <div class="skill-card skill-featured reveal reveal-delay-2" id="skill-photo">
           <div class="skill-icon-svg">
             <svg viewBox="0 0 48 48" width="32" height="32">
               <rect x="4" y="6" width="40" height="36" rx="3" fill="none" stroke="#00e05a" stroke-width="2"/>
@@ -767,6 +770,13 @@
       sourceConnected = true;
     }
 
+    // ─── NAV EQUALIZER SYNC ───
+    function syncNavEq(playing) {
+      const eq = document.getElementById('navEq');
+      if (!eq) return;
+      eq.classList.toggle('playing', playing);
+    }
+
     function syncPlayIcons(playing) {
       document.getElementById('playIcon').style.display    = playing ? 'none'  : 'block';
       document.getElementById('pauseIcon').style.display   = playing ? 'block' : 'none';
@@ -782,9 +792,11 @@
         audio.play();
         updateMiniPlayer();
         syncPlayIcons(true);
+        syncNavEq(true);
       } else {
         audio.pause();
         syncPlayIcons(false);
+        syncNavEq(false);
       }
     }
 
@@ -812,6 +824,7 @@
 
     audio.addEventListener('ended', () => {
       syncPlayIcons(false);
+      syncNavEq(false);
       ['audioBar','miniBar'].forEach(id => document.getElementById(id).style.width = '0');
     });
 

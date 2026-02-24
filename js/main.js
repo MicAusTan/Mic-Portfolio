@@ -409,3 +409,51 @@ window.addEventListener('load', () => {
   setTimeout(typeHeroName, 400);
 });
 
+
+// ─── ORBIT BADGE → SKILL CARD HIGHLIGHT ───
+document.querySelectorAll('.orbit-badge[data-target]').forEach(badge => {
+  badge.addEventListener('click', e => {
+    const targetId = badge.dataset.target;
+    const card = document.getElementById(targetId);
+    if (!card) return;
+    // Let the browser scroll first, then flash
+    setTimeout(() => {
+      card.classList.remove('skill-flash'); // reset if re-clicked quickly
+      void card.offsetWidth; // force reflow
+      card.classList.add('skill-flash');
+      card.addEventListener('animationend', () => card.classList.remove('skill-flash'), { once: true });
+    }, 350);
+  });
+});
+
+// ─── SCROLL PROGRESS BAR ───
+const scrollBar = document.getElementById('scrollProgress');
+if (scrollBar) {
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const pct = (window.scrollY / (doc.scrollHeight - doc.clientHeight)) * 100;
+    scrollBar.style.width = pct + '%';
+  }, { passive: true });
+}
+
+// ─── HERO PARALLAX TILT ───
+const photoSystem = document.getElementById('heroPhotoSystem');
+if (photoSystem && window.innerWidth > 900) {
+  const hero = document.getElementById('home');
+
+  hero.addEventListener('mousemove', e => {
+    const rect = photoSystem.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    // How far mouse is from center of the photo system, normalized -1..1
+    const dx = (e.clientX - centerX) / (window.innerWidth * 0.3);
+    const dy = (e.clientY - centerY) / (window.innerHeight * 0.3);
+    const tiltX = Math.max(-12, Math.min(12, dy * -10));
+    const tiltY = Math.max(-12, Math.min(12, dx * 10));
+    photoSystem.style.transform = `translateY(-50%) perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+  }, { passive: true });
+
+  hero.addEventListener('mouseleave', () => {
+    photoSystem.style.transform = 'translateY(-50%)';
+  });
+}
