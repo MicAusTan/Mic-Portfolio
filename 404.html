@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Page Not Found | Michael Austin Tang</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green:      #00e05a;
+      --green-mid:  #00a84a;
+      --green-dark: #004D1B;
+      --black:      #04090a;
+      --surface:    #080f0b;
+      --surface2:   #0d1a11;
+      --white:      #e4f2ea;
+      --muted:      #6b9c7e;
+      --border:     rgba(0,224,90,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Noise grain overlay */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 100; opacity: 0.5;
+    }
+
+    /* Big glow behind everything */
+    .bg-glow {
+      position: fixed;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,224,90,0.05) 0%, transparent 65%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    /* Orbiting heptagon fragments */
+    .fragments {
+      position: fixed; inset: 0; pointer-events: none;
+    }
+    .frag {
+      position: absolute;
+      clip-path: polygon(50% 3%,86.75% 20.7%,95.82% 60.46%,70.39% 92.35%,29.61% 92.35%,4.18% 60.46%,13.25% 20.7%);
+      opacity: 0;
+      animation: fragFloat var(--dur) ease-in-out var(--delay) infinite alternate;
+    }
+    @keyframes fragFloat {
+      0%   { opacity: 0; transform: translate(0,0) rotate(0deg) scale(0.6); }
+      30%  { opacity: var(--op); }
+      70%  { opacity: var(--op); }
+      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1); }
+    }
+
+    /* Main content */
+    .container {
+      position: relative; z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      animation: fadeUp 0.7s cubic-bezier(.2,.8,.2,1) both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .code-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.22em;
+      color: var(--muted); text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .big-hept {
+      position: relative;
+      width: 160px; height: 160px;
+      margin: 0 auto 2rem;
+    }
+    .big-hept svg {
+      width: 100%; height: 100%;
+      animation: heptPulse 3s ease-in-out infinite;
+    }
+    @keyframes heptPulse {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(0,224,90,0.3)); }
+      50%       { filter: drop-shadow(0 0 24px rgba(0,224,90,0.6)); }
+    }
+    .big-hept-num {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 2.4rem; font-weight: 700;
+      color: var(--green);
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    h1 em { font-style: normal; color: var(--green); }
+
+    .sub {
+      font-size: 0.9rem; color: var(--muted);
+      max-width: 320px; margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .terminal-line {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; color: var(--muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem 1.1rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .terminal-line .prompt { color: var(--green); }
+    .terminal-line .path   { color: rgba(0,224,90,0.5); }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      background: var(--green-dark);
+      border: 1px solid rgba(0,224,90,0.35);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      text-decoration: none;
+      padding: 0.75rem 1.8rem;
+      border-radius: 8px;
+      transition: background 0.25s, border-color 0.25s, transform 0.2s;
+    }
+    .back-btn:hover {
+      background: rgba(0,77,27,0.8);
+      border-color: var(--green);
+      transform: translateY(-2px);
+    }
+    .back-btn svg { flex-shrink: 0; }
+
+    .nav-hint {
+      margin-top: 1.5rem;
+      font-size: 0.75rem; color: var(--muted);
+      font-family: 'Space Mono', monospace;
+    }
+    .nav-hint a {
+      color: rgba(0,224,90,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-hint a:hover { color: var(--green); }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+
+  <!-- Scattered heptagon fragments -->
+  <div class="fragments" id="frags"></div>
+
+  <div class="container">
+    <div class="code-label">Error 404 · Page not found</div>
+
+    <div class="big-hept">
+      <svg viewBox="0 0 160 160">
+        <polygon
+          points="80,6 133.5,32.8 148.6,89.5 113.2,143.4 46.8,143.4 11.4,89.5 26.5,32.8"
+          fill="rgba(0,224,90,0.05)" stroke="rgba(0,224,90,0.4)" stroke-width="1.5"/>
+        <polygon
+          points="80,22 121.8,41.5 134.1,82.6 106.9,119.8 53.1,119.8 25.9,82.6 38.2,41.5"
+          fill="none" stroke="rgba(0,224,90,0.15)" stroke-width="1"/>
+      </svg>
+      <div class="big-hept-num">404</div>
+    </div>
+
+    <h1>Lost in the <em>void</em></h1>
+    <p class="sub">
+      This page doesn't exist, or was moved somewhere else.
+      Either way it's not here.
+    </p>
+
+    <div class="terminal-line">
+      <span class="prompt">$</span>
+      <span class="path">~/mat-portfolio</span>
+      <span>cd /page-not-found</span>
+      <span style="color:#ff5f57">· not found</span>
+    </div>
+    <br>
+    <a href="index.html" class="back-btn">
+      <svg viewBox="0 0 20 20" width="16" height="16">
+        <polyline points="12 4 6 10 12 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to portfolio
+    </a>
+
+    <p class="nav-hint">
+      or jump to:
+      <a href="index.html#about">about</a> ·
+      <a href="index.html#skills">skills</a> ·
+      <a href="index.html#projects">experience</a> ·
+      <a href="index.html#contact">contact</a>
+    </p>
+  </div>
+
+  <script>
+    // Scatter heptagon fragments
+    const frags = document.getElementById('frags');
+    const sizes  = [12, 18, 10, 24, 14, 8, 20, 16];
+    const colors = [
+      'rgba(0,224,90,0.12)', 'rgba(0,168,74,0.1)', 'rgba(0,77,27,0.2)',
+      'rgba(0,224,90,0.08)', 'rgba(0,224,90,0.15)'
+    ];
+    sizes.forEach((s, i) => {
+      const el = document.createElement('div');
+      el.className = 'frag';
+      const x = 5 + Math.random() * 90;
+      const y = 5 + Math.random() * 90;
+      const tx = (Math.random() - 0.5) * 120;
+      const ty = (Math.random() - 0.5) * 120;
+      const rot = (Math.random() - 0.5) * 180;
+      const dur = 3 + Math.random() * 4;
+      const delay = Math.random() * 3;
+      const op = 0.4 + Math.random() * 0.4;
+      el.style.cssText = `
+        left:${x}vw; top:${y}vh;
+        width:${s}px; height:${s}px;
+        background:${colors[i % colors.length]};
+        --tx:${tx}px; --ty:${ty}px;
+        --rot:${rot}deg; --dur:${dur}s;
+        --delay:${delay}s; --op:${op};
+      `;
+      frags.appendChild(el);
+    });
+  </script>
+
+</body>
+</html>
