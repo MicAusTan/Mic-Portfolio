@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michael Austin Tang | IT Student</title>
+  <meta name="description" content="Portfolio of Michael Austin Tang, IT vocational student with skills in music production, photo editing, and technology." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-hept"></div>
+    <div class="loader-text">LOADING...</div>
+  </div>
+
+  <!-- STICKY MINI PLAYER -->
+  <div class="mini-player" id="miniPlayer">
+    <div class="mini-player-inner">
+      <button class="mini-play-btn" id="miniPlayBtn" onclick="toggleAudio()">
+        <svg viewBox="0 0 24 24" width="13" height="13" id="miniPlayIcon"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24" width="13" height="13" id="miniPauseIcon" style="display:none"><rect x="6" y="4" width="4" height="16" fill="currentColor"/><rect x="14" y="4" width="4" height="16" fill="currentColor"/></svg>
+      </button>
+      <div class="mini-track-info">
+        <span class="mini-track-name">Original Track · Michael Austin Tang</span>
+        <span class="mini-track-time" id="miniTime">0:00</span>
+      </div>
+      <div class="mini-progress-wrap">
+        <div class="mini-progress" id="miniProgress">
+          <div class="mini-bar" id="miniBar"></div>
+          <div class="mini-thumb" id="miniThumb"></div>
+        </div>
+      </div>
+      <div class="mini-vol-wrap">
+        <svg viewBox="0 0 20 20" width="14" height="14" class="mini-vol-icon"><path d="M3 7h3l4-4v14l-4-4H3z" fill="currentColor"/><path d="M13 7a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input type="range" class="mini-vol-slider" id="miniVol" min="0" max="100" value="100">
+      </div>
+      <button class="loop-btn mini-loop-btn" id="miniLoopBtn" onclick="toggleLoop()" title="Loop">
+        <svg viewBox="0 0 20 20" width="13" height="13"><path d="M4 10a6 6 0 0 1 6-6h4M16 10a6 6 0 0 1-6 6H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="14 2 16 4 14 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="6 14 4 16 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="mini-close" onclick="closeMiniPlayer()" title="Hide player">
+        <svg viewBox="0 0 20 20" width="12" height="12"><line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">MAT<span>.</span><span class="nav-eq" id="navEq" aria-hidden="true"><span></span><span></span><span></span><span></span></span></a>
+    <ul class="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Experience</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="particles"></div>
+
+    <!-- Big ghost text behind everything -->
+    <div class="hero-bg-name" aria-hidden="true">TANG</div>
+
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        IT Student &nbsp;·&nbsp; Batam, Indonesia
+      </div>
+
+      <!-- Unique editorial name block -->
+      <div class="hero-name-block">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-line"></span>
+          <span class="hero-eyebrow-text">// student &amp; creator</span>
+        </div>
+        <h1 class="hero-name">
+          <span class="hero-name-first" id="heroFirst"></span>
+          <span class="hero-name-divider" aria-hidden="true"></span>
+          <span class="hero-name-last" id="heroLast"></span>
+        </h1>
+        <div class="hero-discipline-row">
+          <span class="hero-discipline" id="heroDiscipline"></span>
+        </div>
+      </div>
+
+      <p class="hero-sub" id="heroSub" aria-label="Vocational student specializing in Information Technology, with a genuine interest in creative problem solving, digital media, and building skills that matter."></p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary"><i class="fas fa-paper-plane"></i> Get in Touch</a>
+        <a href="#about" class="btn-secondary"><i class="fas fa-arrow-down"></i> Learn More</a>
+      </div>
+    </div>
+
+    <div class="hero-photo-system" id="heroPhotoSystem">
+      <div class="heptagon-hero" id="heptagonHero"></div>
+      <div class="hero-photo-wrap" id="heroPhotoWrap">
+        <div class="hero-photo-clip" id="heroPhotoClip">
+          <img src="assets/photo.jpg" alt="Michael Austin Tang" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="section-label">01 About Me</div>
+      <h2 class="section-title reveal">Who I <em>Am</em></h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <!-- Journey timeline strip -->
+          <div class="about-timeline">
+            <div class="abt-item reveal">
+              <div class="abt-dot"></div>
+              <div class="abt-content">
+                <span class="abt-year">2023</span>
+                <span class="abt-event">Enrolled in IT Vocational Track at Sekolah Harapan Utama</span>
+              </div>
+            </div>
+            <div class="abt-item reveal reveal-delay-1">
+              <div class="abt-dot"></div>
+              <div class="abt-content">
+                <span class="abt-year">2023</span>
+                <span class="abt-event">Started self-directed music production and photo editing</span>
+              </div>
+            </div>
+            <div class="abt-item reveal reveal-delay-2">
+              <div class="abt-dot"></div>
+              <div class="abt-content">
+                <span class="abt-year">2024</span>
+                <span class="abt-event">Took on Student IT Support role, assisting classmates and teachers daily</span>
+              </div>
+            </div>
+            <div class="abt-item reveal reveal-delay-3">
+              <div class="abt-dot abt-dot-active"></div>
+              <div class="abt-content">
+                <span class="abt-year">Now</span>
+                <span class="abt-event">Seeking internships and opportunities to apply my skills in a real environment</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="reveal reveal-delay-3" style="margin-top:1.5rem;">
+            Outside of school, I explore <strong>music production</strong> and
+            <strong>photo editing</strong>, skills I believe make me a more
+            well-rounded and creative thinker in any tech environment.
+          </p>
+
+          <div class="about-stats reveal reveal-delay-3">
+            <div class="stat-card">
+              <div class="stat-num" data-target="2" data-suffix="+">0+</div>
+              <div class="stat-label">Years IT Track</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num" data-target="10" data-suffix="+">0+</div>
+              <div class="stat-label">Projects Done</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num" data-target="3" data-suffix="">0</div>
+              <div class="stat-label">Creative Skills</div>
+            </div>
+          </div>
+          <div class="resume-box reveal reveal-delay-4">
+            <p>Want to see my full background and qualifications?</p>
+            <a href="resume.pdf" target="_blank" class="btn-primary">
+              <i class="fas fa-file-pdf"></i> Download My Resume (PDF)
+            </a>
+          </div>
+        </div>
+
+        <!-- Solar system -->
+        <div class="about-visual reveal reveal-delay-2">
+          <div class="solar-system" id="solarSystem">
+            <div class="solar-center" id="solarCenter">
+              <svg viewBox="0 0 100 100" width="100%" height="100%">
+                <defs>
+                  <linearGradient id="heptGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#004D1B"/>
+                    <stop offset="100%" style="stop-color:#001a09"/>
+                  </linearGradient>
+                  <filter id="heptGlow">
+                    <feGaussianBlur stdDeviation="2" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+                <polygon id="centerHept"
+                  points="50,3 86.75,20.70 95.82,60.46 70.39,92.35 29.61,92.35 4.18,60.46 13.25,20.70"
+                  fill="url(#heptGrad)" stroke="#00a84a" stroke-width="1.5" filter="url(#heptGlow)"/>
+              </svg>
+              <div class="solar-center-content">
+                <svg viewBox="0 0 36 36" width="30" height="30">
+                  <rect x="3" y="5" width="30" height="20" rx="3" fill="none" stroke="#00e05a" stroke-width="1.8"/>
+                  <rect x="3" y="5" width="30" height="20" rx="3" fill="#001a09" opacity="0.6"/>
+                  <rect x="8" y="10" width="20" height="10" rx="1" fill="none" stroke="#004D1B" stroke-width="1"/>
+                  <line x1="10" y1="13" x2="20" y2="13" stroke="#00e05a" stroke-width="0.9"/>
+                  <line x1="10" y1="16" x2="18" y2="16" stroke="#00a84a" stroke-width="0.9"/>
+                  <line x1="10" y1="19" x2="16" y2="19" stroke="#00a84a" stroke-width="0.9"/>
+                  <rect x="13" y="25" width="10" height="2.5" rx="1" fill="#004D1B" stroke="#00a84a" stroke-width="0.5"/>
+                  <rect x="7" y="27.5" width="22" height="1.5" rx="1" fill="#004D1B" stroke="#00a84a" stroke-width="0.5"/>
+                </svg>
+                <span>IT</span>
+              </div>
+            </div>
+            <svg class="orbit-svg" id="orbitSvg" viewBox="0 0 400 400"></svg>
+            <a href="#skill-it" class="orbit-badge" id="badge0" data-index="0" data-target="skill-it">
+              <svg viewBox="0 0 20 20" width="16" height="16">
+                <rect x="1" y="2" width="18" height="13" rx="2" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+                <line x1="7" y1="19" x2="13" y2="19" stroke="#00e05a" stroke-width="1.5"/>
+                <line x1="10" y1="15" x2="10" y2="19" stroke="#00e05a" stroke-width="1.5"/>
+              </svg>
+              IT Support
+            </a>
+            <a href="#skill-music" class="orbit-badge" id="badge1" data-index="1" data-target="skill-music">
+              <svg viewBox="0 0 20 20" width="16" height="16">
+                <path d="M7 16V4l10-2v12" fill="none" stroke="#00e05a" stroke-width="1.5" stroke-linejoin="round"/>
+                <circle cx="4.5" cy="16" r="2.5" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+                <circle cx="14.5" cy="14" r="2.5" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+              </svg>
+              Music
+            </a>
+            <a href="#skill-photo" class="orbit-badge" id="badge2" data-index="2" data-target="skill-photo">
+              <svg viewBox="0 0 20 20" width="16" height="16">
+                <rect x="1" y="1" width="18" height="18" rx="2" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+                <circle cx="6" cy="6" r="2" fill="none" stroke="#00e05a" stroke-width="1.2"/>
+                <circle cx="6" cy="6" r="0.7" fill="#00e05a"/>
+                <polyline points="19,14 14,9 8,15 5,12 1,16" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+              </svg>
+              Photo Edit
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-inner">
+      <div class="section-label">02 Skills</div>
+      <h2 class="section-title reveal">What I <em>Bring</em></h2>
+      <p class="section-desc reveal reveal-delay-1">
+        A mix of technical foundations and creative abilities, built through
+        coursework, self-learning, and real school responsibilities.
+      </p>
+
+      <div class="skills-primary">
+        <!-- IT Support -->
+        <div class="skill-card skill-featured reveal" id="skill-it">
+          <div class="skill-icon-svg">
+            <svg viewBox="0 0 48 48" width="32" height="32">
+              <rect x="4" y="8" width="40" height="26" rx="4" fill="none" stroke="#00e05a" stroke-width="2"/>
+              <rect x="4" y="8" width="40" height="26" rx="4" fill="#001a09" opacity="0.5"/>
+              <rect x="9" y="13" width="30" height="15" rx="2" fill="none" stroke="#004D1B" stroke-width="1.5"/>
+              <line x1="11" y1="17" x2="27" y2="17" stroke="#00e05a" stroke-width="1.5"/>
+              <line x1="11" y1="21" x2="24" y2="21" stroke="#00a84a" stroke-width="1.5"/>
+              <line x1="11" y1="25" x2="20" y2="25" stroke="#00a84a" stroke-width="1.5"/>
+              <path d="M32 18 L36 22 L32 26" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+              <line x1="20" y1="34" x2="28" y2="34" stroke="#00a84a" stroke-width="2"/>
+              <rect x="10" y="38" width="28" height="2" rx="1" fill="#004D1B"/>
+            </svg>
+          </div>
+          <div class="skill-name">IT Support</div>
+          <div class="skill-desc">
+            Computer troubleshooting, software assistance, and digital file management
+            in a real school environment with classmates and teachers daily.
+          </div>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar"><div class="skill-bar-fill" data-pct="72"></div></div>
+            <div class="skill-pct">72%</div>
+          </div>
+          <!-- Interactive terminal artifact -->
+          <div class="exp-terminal">
+            <div class="exp-term-bar">
+              <span class="term-dot term-red"></span>
+              <span class="term-dot term-yellow"></span>
+              <span class="term-dot term-green-dot"></span>
+              <span class="exp-term-title">support-console.sh</span>
+            </div>
+            <div class="exp-term-body" id="expTermBody">
+              <div class="exp-term-line"><span class="term-prompt">$</span> <span class="exp-term-welcome">Type a command — try: help, status, ping, whoami</span></div>
+            </div>
+            <div class="exp-term-input-row">
+              <span class="term-prompt">$</span>
+              <input class="exp-term-input" id="expTermInput" type="text" placeholder="type a command..." autocomplete="off" spellcheck="false"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Music Production -->
+        <div class="skill-card skill-featured reveal reveal-delay-1" id="skill-music">
+          <div class="skill-icon-svg">
+            <svg viewBox="0 0 48 48" width="32" height="32">
+              <circle cx="14" cy="36" r="6" fill="none" stroke="#00e05a" stroke-width="2"/>
+              <circle cx="38" cy="32" r="6" fill="none" stroke="#00a84a" stroke-width="2"/>
+              <path d="M20 36 L20 10 L44 6 L44 32" fill="none" stroke="#00e05a" stroke-width="2"/>
+              <line x1="20" y1="10" x2="44" y2="6" stroke="#004D1B" stroke-width="1.5"/>
+              <line x1="6" y1="30" x2="14" y2="30" stroke="#00a84a" stroke-width="2"/>
+              <line x1="10" y1="26" x2="10" y2="34" stroke="#00a84a" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="skill-name">Music Production</div>
+          <div class="skill-desc">
+            Creating digital music using DAW software, beat making, layering sounds,
+            and basic audio mixing for original tracks.
+          </div>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar"><div class="skill-bar-fill" data-pct="77"></div></div>
+            <div class="skill-pct">77%</div>
+          </div>
+
+          <!-- FL Studio project peek -->
+          <div class="fl-peek" id="flPeek">
+            <img src="assets/tearscreenie.png" id="flPeekImg" alt="FL Studio project" loading="lazy" class="lightbox-trigger" data-caption="Tearchia — FL Studio arrangement"/>
+            <div class="fl-peek-label" id="flPeekLabel">Tearchia — FL Studio</div>
+          </div>
+
+          <!-- Track switcher -->
+          <div class="track-switcher">
+            <button class="track-tab active" data-src="assets/music-sample.mp3" data-label="Tearchia" data-img="assets/tearscreenie.png">Tearchia</button>
+            <button class="track-tab" data-src="assets/hr1.mp3" data-label="HR1" data-img="assets/hr1screenie.png">HR1</button>
+            <button class="track-tab" data-src="assets/28th_sample.mp3" data-label="28th" data-img="assets/28thscreenie.png">28th</button>
+          </div>
+
+          <!-- Waveform visualizer -->
+          <div class="wave-visualizer" id="waveVisualizer" aria-hidden="true">
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+          </div>
+          <!-- Audio player -->
+          <div class="audio-player" id="audioPlayer">
+            <audio id="trackAudio" preload="none">
+              <source src="assets/music-sample.mp3" type="audio/mpeg">
+            </audio>
+            <div class="audio-header">
+              <div class="audio-label">
+                <svg viewBox="0 0 16 16" width="11" height="11"><polygon points="3,2 13,8 3,14" fill="#00e05a"/></svg>
+                <span id="audioTrackName">Tearchia</span>
+              </div>
+              <div class="audio-time-display">
+                <span id="audioTimeCur">0:00</span><span class="audio-time-sep">/</span><span id="audioTimeDur">0:00</span>
+              </div>
+            </div>
+            <div class="audio-controls">
+              <button class="audio-btn" id="playBtn" onclick="toggleAudio()">
+                <svg viewBox="0 0 24 24" width="14" height="14" id="playIcon"><polygon points="5,3 19,12 5,21" fill="#001a09"/></svg>
+                <svg viewBox="0 0 24 24" width="14" height="14" id="pauseIcon" style="display:none"><rect x="6" y="4" width="4" height="16" fill="#001a09"/><rect x="14" y="4" width="4" height="16" fill="#001a09"/></svg>
+              </button>
+              <button class="loop-btn" id="loopBtn" onclick="toggleLoop()" title="Loop">
+                <svg viewBox="0 0 20 20" width="13" height="13"><path d="M4 10a6 6 0 0 1 6-6h4M16 10a6 6 0 0 1-6 6H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="14 2 16 4 14 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="6 14 4 16 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="audio-scrub-wrap">
+                <div class="audio-progress" id="audioProgress">
+                  <div class="audio-bar" id="audioBar"></div>
+                  <div class="audio-thumb" id="audioThumb"></div>
+                </div>
+              </div>
+            </div>
+            <div class="audio-vol-row">
+              <svg viewBox="0 0 20 20" width="13" height="13" class="vol-icon"><path d="M3 7h3l4-4v14l-4-4H3z" fill="currentColor"/><path d="M13 7a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="100">
+              <span class="vol-label" id="volLabel">100%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Photo Editing -->
+        <div class="skill-card skill-featured reveal reveal-delay-2" id="skill-photo">
+          <div class="skill-icon-svg">
+            <svg viewBox="0 0 48 48" width="32" height="32">
+              <rect x="4" y="6" width="40" height="36" rx="3" fill="none" stroke="#00e05a" stroke-width="2"/>
+              <rect x="4" y="6" width="40" height="36" rx="3" fill="#001a09" opacity="0.4"/>
+              <circle cx="15" cy="18" r="5" fill="none" stroke="#00a84a" stroke-width="1.8"/>
+              <circle cx="15" cy="18" r="2" fill="#00a84a"/>
+              <polyline points="4,38 17,25 26,33 34,21 44,38" fill="none" stroke="#00e05a" stroke-width="2"/>
+              <rect x="30" y="10" width="10" height="7" rx="1" fill="none" stroke="#004D1B" stroke-width="1.5"/>
+              <line x1="32" y1="13" x2="38" y2="13" stroke="#00a84a" stroke-width="1"/>
+              <line x1="32" y1="15" x2="36" y2="15" stroke="#00a84a" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="skill-name">Photo Editing</div>
+          <div class="skill-desc">
+            Color correction, retouching, and visual composition using Paint.NET.
+            Drag the slider to see the before and after.
+          </div>
+          <div class="skill-bar-wrap">
+            <div class="skill-bar"><div class="skill-bar-fill" data-pct="70"></div></div>
+            <div class="skill-pct">70%</div>
+          </div>
+          <!-- Before / After slider — wrapper-clip approach -->
+          <div class="ba-wrap">
+            <div class="ba-slider" id="baSlider">
+              <!-- AFTER: sits at the back, full size -->
+              <img class="ba-full-img" id="baAfterImg" src="assets/elvis_ciputra.png" alt="After" draggable="false"/>
+              <!-- BEFORE wrapper: overflow:hidden, width controlled by JS -->
+              <div class="ba-before-clip" id="baBeforeClip">
+                <!-- Image is position:absolute full-width so it never shrinks with its parent -->
+                <img class="ba-full-img ba-before-inner" id="baBeforeImg" src="assets/devinguitart.png" alt="Before" draggable="false"/>
+              </div>
+              <!-- Divider line + drag handle -->
+              <div class="ba-divider" id="baDivider">
+                <div class="ba-handle-knob">
+                  <svg viewBox="0 0 20 20" width="14" height="14"><polyline points="6,4 2,10 6,16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="14,4 18,10 14,16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </div>
+              </div>
+              <div class="ba-labels">
+                <span class="ba-label-before">BEFORE</span>
+                <span class="ba-label-after">AFTER</span>
+              </div>
+              <button class="ba-expand-btn" id="baExpandBtn" title="View full size">
+                <svg viewBox="0 0 20 20" width="14" height="14"><path d="M3 8V3h5M17 8V3h-5M3 12v5h5M17 12v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <div class="ba-nav">
+              <button class="ba-nav-btn" id="baPrev">
+                <svg viewBox="0 0 20 20" width="14" height="14"><polyline points="12 4 6 10 12 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </button>
+              <span class="ba-nav-label" id="baNavLabel">Guitar Edit · 1 / 3</span>
+              <button class="ba-nav-btn" id="baNext">
+                <svg viewBox="0 0 20 20" width="14" height="14"><polyline points="8 4 14 10 8 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary skills -->
+      <div class="skills-secondary-label reveal">Supporting Skills</div>
+      <div class="skills-secondary">
+        <div class="skill-card skill-minor reveal">
+          <div class="skill-icon-svg skill-icon-sm">
+            <svg viewBox="0 0 28 28" width="20" height="20">
+              <circle cx="8" cy="20" r="4" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+              <circle cx="22" cy="16" r="4" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+              <line x1="12" y1="20" x2="18" y2="16" stroke="#00a84a" stroke-width="1.5"/>
+              <circle cx="14" cy="8" r="3" fill="none" stroke="#00a84a" stroke-width="1.5"/>
+              <line x1="8" y1="16" x2="12" y2="10" stroke="#004D1B" stroke-width="1.5"/>
+              <line x1="22" y1="12" x2="17" y2="10" stroke="#004D1B" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="skill-name-sm">Teamwork</div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar"><div class="skill-bar-fill" data-pct="85"></div></div>
+              <div class="skill-pct">85%</div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-card skill-minor reveal reveal-delay-1">
+          <div class="skill-icon-svg skill-icon-sm">
+            <svg viewBox="0 0 28 28" width="20" height="20">
+              <circle cx="14" cy="11" r="6" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+              <line x1="14" y1="5" x2="14" y2="3" stroke="#00e05a" stroke-width="1.5"/>
+              <line x1="19" y1="7" x2="21" y2="5" stroke="#00e05a" stroke-width="1.5"/>
+              <line x1="9" y1="7" x2="7" y2="5" stroke="#00e05a" stroke-width="1.5"/>
+              <path d="M8 17 Q14 25 20 17" fill="none" stroke="#00a84a" stroke-width="1.5"/>
+              <line x1="10" y1="23" x2="18" y2="23" stroke="#004D1B" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="skill-name-sm">Problem Solving</div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar"><div class="skill-bar-fill" data-pct="75"></div></div>
+              <div class="skill-pct">75%</div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-card skill-minor reveal reveal-delay-2">
+          <div class="skill-icon-svg skill-icon-sm">
+            <svg viewBox="0 0 28 28" width="20" height="20">
+              <rect x="2" y="4" width="24" height="18" rx="2" fill="none" stroke="#00e05a" stroke-width="1.5"/>
+              <polygon points="11,9 11,17 19,13" fill="#00e05a"/>
+              <line x1="8" y1="26" x2="20" y2="26" stroke="#00a84a" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="skill-name-sm">Video Editing</div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar"><div class="skill-bar-fill" data-pct="55"></div></div>
+              <div class="skill-pct">55%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- TOOLS STRIP -->
+      <div class="tools-label reveal">Tools I Use</div>
+      <div class="tools-strip reveal">
+        <div class="tool-item">
+          <div class="tool-icon">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <rect x="2" y="2" width="36" height="36" rx="8" fill="#FF6B00" opacity="0.15"/>
+              <text x="20" y="27" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="16" fill="#FF8C00">FL</text>
+            </svg>
+          </div>
+          <span>FL Studio</span>
+        </div>
+        <div class="tool-item">
+          <div class="tool-icon">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <rect x="2" y="2" width="36" height="36" rx="8" fill="#1e90ff" opacity="0.15"/>
+              <path d="M10 30 Q10 10 20 10 Q30 10 30 20 Q30 28 22 28 Q16 28 16 22 Q16 17 20 17" fill="none" stroke="#1e90ff" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="20" cy="17" r="2" fill="#1e90ff"/>
+            </svg>
+          </div>
+          <span>Paint.NET</span>
+        </div>
+        <div class="tool-item">
+          <div class="tool-icon">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <rect x="2" y="2" width="36" height="36" rx="8" fill="#a855f7" opacity="0.15"/>
+              <polygon points="20,8 28,13 28,23 20,28 12,23 12,13" fill="none" stroke="#a855f7" stroke-width="2"/>
+              <circle cx="20" cy="18" r="3" fill="#a855f7" opacity="0.6"/>
+            </svg>
+          </div>
+          <span>VS Code</span>
+        </div>
+        <div class="tool-item">
+          <div class="tool-icon">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <rect x="2" y="2" width="36" height="36" rx="8" fill="#00e05a" opacity="0.12"/>
+              <rect x="8" y="13" width="24" height="17" rx="2" fill="none" stroke="#00e05a" stroke-width="2"/>
+              <line x1="13" y1="19" x2="27" y2="19" stroke="#00e05a" stroke-width="1.5"/>
+              <line x1="13" y1="24" x2="21" y2="24" stroke="#00e05a" stroke-width="1.5"/>
+              <line x1="26" y1="10" x2="32" y2="10" stroke="#00e05a" stroke-width="1.5"/>
+              <line x1="29" y1="7" x2="29" y2="13" stroke="#00e05a" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span>GitHub</span>
+        </div>
+      </div>
+
+      <!-- 7 Heptagon competency cells — one per side of a heptagon, stretches full width -->
+      <div class="core-skills-label reveal">Core Competencies</div>
+      <div class="hept-grid reveal">
+        <div class="hept-cell"><div class="hept-shape">
+          <svg viewBox="0 0 80 80">
+            <polygon class="hept-outer" points="40,4 69.4,16.56 76.64,48.44 56.31,73.44 23.69,73.44 3.36,48.44 10.6,16.56" fill="rgba(0,224,90,0.06)" stroke="rgba(0,224,90,0.25)" stroke-width="1.2"/>
+            <circle class="hept-dot" cx="40.0" cy="4.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="68.1" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="75.1" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="55.6" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="24.4" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="4.9" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="11.9" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+          </svg>
+          <span>Microsoft Office</span>
+        </div></div>
+        <div class="hept-cell"><div class="hept-shape">
+          <svg viewBox="0 0 80 80">
+            <polygon class="hept-outer" points="40,4 69.4,16.56 76.64,48.44 56.31,73.44 23.69,73.44 3.36,48.44 10.6,16.56" fill="rgba(0,224,90,0.06)" stroke="rgba(0,224,90,0.25)" stroke-width="1.2"/>
+            <circle class="hept-dot" cx="40.0" cy="4.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="68.1" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="75.1" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="55.6" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="24.4" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="4.9" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="11.9" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+          </svg>
+          <span>Google Workspace</span>
+        </div></div>
+        <div class="hept-cell"><div class="hept-shape">
+          <svg viewBox="0 0 80 80">
+            <polygon class="hept-outer" points="40,4 69.4,16.56 76.64,48.44 56.31,73.44 23.69,73.44 3.36,48.44 10.6,16.56" fill="rgba(0,224,90,0.06)" stroke="rgba(0,224,90,0.25)" stroke-width="1.2"/>
+            <circle class="hept-dot" cx="40.0" cy="4.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="68.1" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="75.1" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="55.6" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="24.4" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="4.9" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="11.9" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+          </svg>
+          <span>File Management</span>
+        </div></div>
+        <div class="hept-cell"><div class="hept-shape">
+          <svg viewBox="0 0 80 80">
+            <polygon class="hept-outer" points="40,4 69.4,16.56 76.64,48.44 56.31,73.44 23.69,73.44 3.36,48.44 10.6,16.56" fill="rgba(0,224,90,0.06)" stroke="rgba(0,224,90,0.25)" stroke-width="1.2"/>
+            <circle class="hept-dot" cx="40.0" cy="4.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="68.1" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="75.1" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="55.6" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="24.4" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="4.9" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="11.9" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+          </svg>
+          <span>Communication</span>
+        </div></div>
+        <div class="hept-cell"><div class="hept-shape">
+          <svg viewBox="0 0 80 80">
+            <polygon class="hept-outer" points="40,4 69.4,16.56 76.64,48.44 56.31,73.44 23.69,73.44 3.36,48.44 10.6,16.56" fill="rgba(0,224,90,0.06)" stroke="rgba(0,224,90,0.25)" stroke-width="1.2"/>
+            <circle class="hept-dot" cx="40.0" cy="4.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="68.1" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="75.1" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="55.6" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="24.4" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="4.9" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="11.9" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+          </svg>
+          <span>Self Learning</span>
+        </div></div>
+        <div class="hept-cell"><div class="hept-shape">
+          <svg viewBox="0 0 80 80">
+            <polygon class="hept-outer" points="40,4 69.4,16.56 76.64,48.44 56.31,73.44 23.69,73.44 3.36,48.44 10.6,16.56" fill="rgba(0,224,90,0.06)" stroke="rgba(0,224,90,0.25)" stroke-width="1.2"/>
+            <circle class="hept-dot" cx="40.0" cy="4.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="68.1" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="75.1" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="55.6" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="24.4" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="4.9" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="11.9" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+          </svg>
+          <span>Creative Thinking</span>
+        </div></div>
+        <div class="hept-cell"><div class="hept-shape">
+          <svg viewBox="0 0 80 80">
+            <polygon class="hept-outer" points="40,4 69.4,16.56 76.64,48.44 56.31,73.44 23.69,73.44 3.36,48.44 10.6,16.56" fill="rgba(0,224,90,0.06)" stroke="rgba(0,224,90,0.25)" stroke-width="1.2"/>
+            <circle class="hept-dot" cx="40.0" cy="4.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="68.1" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="75.1" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="55.6" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="24.4" cy="72.4" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="4.9" cy="48.0" r="2" fill="rgba(0,224,90,0.35)"/>
+            <circle class="hept-dot" cx="11.9" cy="17.6" r="2" fill="rgba(0,224,90,0.35)"/>
+          </svg>
+          <span>Adaptability</span>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="projects">
+    <div class="section-inner">
+      <div class="section-label">03 Experience</div>
+      <h2 class="section-title reveal">What I've <em>Done</em></h2>
+      <p class="section-desc reveal reveal-delay-1">
+        Real responsibilities and hands-on projects that have shaped my
+        technical and collaborative skills so far.
+      </p>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-left">
+            <div class="tl-year">Jan 2024<br><span>Present</span></div>
+          </div>
+          <div class="tl-connector">
+            <div class="tl-dot tl-dot-active"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-card">
+            <div class="tl-card-header">
+              <div class="tl-title">Student IT Support</div>
+              <div class="tl-badge active-badge">Active</div>
+            </div>
+            <div class="tl-org">Sekolah Harapan Utama · Batam</div>
+            <div class="tl-desc">
+              Provided daily IT assistance to classmates and teachers, troubleshooting hardware
+              and software, organizing digital files, and supporting group presentations. Gained
+              firsthand experience with real IT support workflows in a live school environment.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">IT Support</span>
+              <span class="project-tag">Hardware</span>
+              <span class="project-tag">Software</span>
+              <span class="project-tag">File Management</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="tl-item reveal reveal-delay-1">
+          <div class="tl-left">
+            <div class="tl-year">Jul 2023<br><span>Dec 2023</span></div>
+          </div>
+          <div class="tl-connector">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-card">
+            <div class="tl-card-header">
+              <div class="tl-title">Group Project Member</div>
+            </div>
+            <div class="tl-org">Sekolah Harapan Utama · Team Collaboration</div>
+            <div class="tl-desc">
+              Collaborated with classmates on IT-related group assignments, contributed ideas
+              during planning sessions, and presented results in front of the class. Built
+              strong communication and time management habits.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Teamwork</span>
+              <span class="project-tag">Presentation</span>
+              <span class="project-tag">Planning</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item reveal reveal-delay-2">
+          <div class="tl-left">
+            <div class="tl-year">2023<br><span>Present</span></div>
+          </div>
+          <div class="tl-connector">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-card">
+            <div class="tl-card-header">
+              <div class="tl-title">Independent Creative Projects</div>
+            </div>
+            <div class="tl-org">Personal Practice · Music &amp; Visual Media</div>
+            <div class="tl-desc">
+              Self-directed work in music production and photo editing, experimenting with
+              digital tools and refining creative judgment through consistent practice. Reflects
+              a commitment to growth outside the classroom.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Music Production</span>
+              <span class="project-tag">Photo Editing</span>
+              <span class="project-tag">Self Learning</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="tl-item reveal reveal-delay-3">
+          <div class="tl-left">
+            <div class="tl-year">Jan 2023<br><span>Jun 2023</span></div>
+          </div>
+          <div class="tl-connector">
+            <div class="tl-dot"></div>
+            <div class="tl-line tl-line-last"></div>
+          </div>
+          <div class="tl-card">
+            <div class="tl-card-header">
+              <div class="tl-title">IT Foundations Self-Study</div>
+            </div>
+            <div class="tl-org">Online Courses &amp; Personal Practice</div>
+            <div class="tl-desc">
+              Supplemented formal education with online tutorials and self-paced learning.
+              Practiced productivity, design, and media software to build technical versatility
+              beyond the curriculum.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Online Learning</span>
+              <span class="project-tag">Productivity Tools</span>
+              <span class="project-tag">Design Software</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="section-label">04 Contact</div>
+      <h2 class="section-title reveal">Let's <em>Connect</em></h2>
+      <p class="section-desc reveal reveal-delay-1">
+        Whether you're a teacher, recruiter, or fellow student, I'd love to hear from you.
+      </p>
+      <div class="contact-grid">
+        <div class="contact-info reveal reveal-delay-1">
+          <a href="tel:082172275543" class="contact-item">
+            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-value">0821 7227 5543</div>
+            </div>
+          </a>
+          <a href="mailto:michaelaustintang7@gmail.com" class="contact-item">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">michaelaustintang7@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/michael-austin-tang-1309a93aa/" target="_blank" class="contact-item">
+            <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+            <div>
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-value">Michael Austin Tang</div>
+            </div>
+          </a>
+        </div>
+        <div class="contact-cta reveal reveal-delay-2">
+          <div class="cta-big">Ready to <em>work</em><br>or learn together?</div>
+          <div class="cta-sub">
+            Download my resume and connect with me on LinkedIn.
+            I'm open to internships, collaborations, and new opportunities.
+          </div>
+          <div class="cta-buttons">
+            <a href="resume.pdf" target="_blank" class="btn-primary">
+              <i class="fas fa-file-pdf"></i> View Resume (PDF)
+            </a>
+            <a href="https://www.linkedin.com/in/michael-austin-tang-1309a93aa/" target="_blank" class="btn-secondary">
+              <i class="fab fa-linkedin-in"></i> Connect on LinkedIn
+            </a>
+            <a href="mailto:michaelaustintang7@gmail.com" class="btn-secondary">
+              <i class="fas fa-envelope"></i> Send Me an Email
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal availability widget -->
+      <div class="terminal-widget reveal" id="terminalWidget">
+        <div class="term-bar">
+          <span class="term-dot term-red"></span>
+          <span class="term-dot term-yellow"></span>
+          <span class="term-dot term-green-dot"></span>
+          <span class="term-title">status.sh</span>
+        </div>
+        <div class="term-body">
+          <div class="term-line"><span class="term-prompt">$</span>&nbsp;<span class="term-cmd">check-availability --student michael-tang</span></div>
+          <div class="term-output" id="termOutput"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" width="20" height="20">
+      <polyline points="18 15 12 9 6 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <footer>
+    <a href="#home" class="footer-logo">MAT.</a>
+    <p class="footer-text">© 2026 Michael Austin Tang · IT Student · Batam, Indonesia</p>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Experience</a>
+      <a href="#contact">Contact</a>
+      <a href="https://www.linkedin.com/in/michael-austin-tang-1309a93aa/" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox-overlay" id="lightboxOverlay">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose">
+        <svg viewBox="0 0 20 20" width="18" height="18"><line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <!-- Image mode -->
+      <div class="lightbox-img-wrap" id="lightboxImgWrap">
+        <img id="lightboxImg" src="" alt=""/>
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+      </div>
+      <!-- BA slider mode -->
+      <div class="lightbox-ba-wrap" id="lightboxBaWrap" style="display:none">
+        <div class="ba-slider lightbox-ba-slider" id="lightboxBaSlider">
+          <img class="ba-full-img" id="lbAfterImg"  src="" alt="After"  draggable="false"/>
+          <div class="ba-before-clip" id="lbBeforeClip">
+            <img class="ba-full-img ba-before-inner" id="lbBeforeImg" src="" alt="Before" draggable="false"/>
+          </div>
+          <div class="ba-divider" id="lbDivider">
+            <div class="ba-handle-knob">
+              <svg viewBox="0 0 20 20" width="14" height="14"><polyline points="6,4 2,10 6,16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="14,4 18,10 14,16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="ba-labels">
+            <span class="ba-label-before">BEFORE</span>
+            <span class="ba-label-after">AFTER</span>
+          </div>
+        </div>
+        <div class="lightbox-caption" id="lightboxBaCaption"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hide');
+        setTimeout(() => document.getElementById('loader').remove(), 600);
+      }, 800);
+    });
+
+    // ─── WEB AUDIO (boost gain) ───
+    let audioCtx, gainNode, audioSource, sourceConnected = false;
+
+    function getAudioCtx() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        gainNode = audioCtx.createGain();
+        gainNode.gain.value = 2.5;
+        gainNode.connect(audioCtx.destination);
+      }
+      return audioCtx;
+    }
+
+    function connectSource() {
+      if (sourceConnected) return;
+      const audio = document.getElementById('trackAudio');
+      getAudioCtx();
+      audioSource = audioCtx.createMediaElementSource(audio);
+      audioSource.connect(gainNode);
+      sourceConnected = true;
+    }
+
+    // ─── NAV EQUALIZER SYNC ───
+    function syncNavEq(playing) {
+      const eq = document.getElementById('navEq');
+      if (!eq) return;
+      eq.classList.toggle('playing', playing);
+    }
+
+    function syncPlayIcons(playing) {
+      document.getElementById('playIcon').style.display    = playing ? 'none'  : 'block';
+      document.getElementById('pauseIcon').style.display   = playing ? 'block' : 'none';
+      document.getElementById('miniPlayIcon').style.display  = playing ? 'none'  : 'block';
+      document.getElementById('miniPauseIcon').style.display = playing ? 'block' : 'none';
+    }
+
+    function toggleAudio() {
+      connectSource();
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      const audio = document.getElementById('trackAudio');
+      if (audio.paused) {
+        audio.play();
+        updateMiniPlayer();
+        syncPlayIcons(true);
+        syncNavEq(true);
+      } else {
+        audio.pause();
+        syncPlayIcons(false);
+        syncNavEq(false);
+      }
+    }
+
+    // ─── PROGRESS TRACKING ───
+    const audio = document.getElementById('trackAudio');
+    let lastUpdate = 0;
+
+    audio.addEventListener('timeupdate', () => {
+      const now = Date.now();
+      if (now - lastUpdate < 66) return;
+      lastUpdate = now;
+      if (!audio.duration) return;
+      const pct = (audio.currentTime / audio.duration) * 100;
+
+      document.getElementById('audioBar').style.width   = pct + '%';
+      document.getElementById('audioThumb').style.left  = pct + '%';
+      document.getElementById('miniBar').style.width    = pct + '%';
+      document.getElementById('miniThumb').style.left   = pct + '%';
+
+      const fmt = t => `${Math.floor(t/60)}:${Math.floor(t%60).toString().padStart(2,'0')}`;
+      document.getElementById('audioTimeCur').textContent = fmt(audio.currentTime);
+      document.getElementById('audioTimeDur').textContent = fmt(audio.duration);
+      document.getElementById('miniTime').textContent     = fmt(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', () => {
+      syncPlayIcons(false);
+      syncNavEq(false);
+      ['audioBar','miniBar'].forEach(id => document.getElementById(id).style.width = '0');
+    });
+
+    // ─── DRAG SCRUB ───
+    function setupScrub(progressId) {
+      const prog = document.getElementById(progressId);
+      if (!prog) return;
+      let dragging = false;
+
+      function seek(e) {
+        const rect = prog.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        if (audio.duration) audio.currentTime = pct * audio.duration;
+      }
+
+      prog.addEventListener('mousedown',  e => { dragging = true; seek(e); });
+      prog.addEventListener('touchstart', e => { dragging = true; seek(e); }, { passive: true });
+      window.addEventListener('mousemove', e => { if (dragging) seek(e); });
+      window.addEventListener('touchmove', e => { if (dragging) seek(e); }, { passive: true });
+      window.addEventListener('mouseup',   () => dragging = false);
+      window.addEventListener('touchend',  () => dragging = false);
+    }
+
+    setupScrub('audioProgress');
+    setupScrub('miniProgress');
+
+    // ─── VOLUME ───
+    function applyVolume(val) {
+      connectSource();
+      if (gainNode) gainNode.gain.value = (val / 100) * 2.5;
+    }
+
+    document.getElementById('volSlider').addEventListener('input', function() {
+      applyVolume(this.value);
+      document.getElementById('volLabel').textContent = this.value + '%';
+      document.getElementById('miniVol').value = this.value;
+    });
+
+    document.getElementById('miniVol').addEventListener('input', function() {
+      applyVolume(this.value);
+      document.getElementById('volSlider').value = this.value;
+      document.getElementById('volLabel').textContent = this.value + '%';
+    });
+
+    // ─── WAVEFORM VISUALIZER ───
+    const waveEl = document.getElementById('waveVisualizer');
+    const waveBars = waveEl ? waveEl.querySelectorAll('.wave-bar') : [];
+    let waveAnimId;
+
+    function animateWave() {
+      waveBars.forEach((bar, i) => {
+        const h = Math.max(3, Math.abs(Math.sin(Date.now() / (180 + i * 30) + i * 0.7)) * 28 + Math.random() * 8);
+        bar.style.height = h + 'px';
+      });
+      waveAnimId = requestAnimationFrame(animateWave);
+    }
+
+    audio.addEventListener('play', () => { if (waveEl) { waveEl.dataset.playing="1"; animateWave(); } });
+    audio.addEventListener('pause', () => {
+      cancelAnimationFrame(waveAnimId);
+      delete waveEl.dataset.playing;
+      waveBars.forEach(b => b.style.height = '3px');
+    });
+    audio.addEventListener('ended', () => {
+      cancelAnimationFrame(waveAnimId);
+      delete waveEl.dataset.playing;
+      waveBars.forEach(b => b.style.height = '3px');
+    });
+
+    // ─── TERMINAL WIDGET ───
+    function runTerminal() {
+      const out = document.getElementById('termOutput');
+      if (!out) return;
+      const lines = [
+        { text: '> Scanning profile...', delay: 300 },
+        { text: '> Status:         <span style="color:#28c840">OPEN</span> to internships &amp; collaborations', delay: 800 },
+        { text: '> Location:       Batam, Indonesia', delay: 300 },
+        { text: '> Languages:      Indonesian (native), English (working)', delay: 300 },
+        { text: '> Response time:  &lt; 24 hours via email or LinkedIn', delay: 300 },
+        { text: '> Best contact:   michaelaustintang7@gmail.com', delay: 300 },
+        { text: '&#10003; Profile loaded. Ready to connect.', delay: 500, success: true },
+      ];
+      let cumDelay = 400;
+      lines.forEach(l => {
+        cumDelay += l.delay;
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = 'term-line';
+          if (l.success) div.style.color = '#28c840';
+          div.innerHTML = l.text;
+          out.appendChild(div);
+        }, cumDelay);
+      });
+    }
+
+    const termWidget = document.getElementById('terminalWidget');
+    if (termWidget) {
+      let termRan = false;
+      const termObs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && !termRan) { termRan = true; runTerminal(); }
+      }, { threshold: 0.4 });
+      termObs.observe(termWidget);
+    }
+
+    // ─── LOOP TOGGLE ───
+    let loopEnabled = false;
+    function toggleLoop() {
+      const audio = document.getElementById('trackAudio');
+      loopEnabled = !loopEnabled;
+      audio.loop = loopEnabled;
+      ['loopBtn','miniLoopBtn'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.toggle('loop-active', loopEnabled);
+      });
+    }
+
+    // ─── MINI PLAYER — only show when audio player is out of view ───
+    let audioPlayerVisible = true;
+
+    function closeMiniPlayer() {
+      document.getElementById('miniPlayer')?.classList.remove('active');
+    }
+
+    function updateMiniPlayer() {
+      const mp = document.getElementById('miniPlayer');
+      if (!mp) return;
+      // Show only when playing AND audio player is scrolled out of view
+      if (!audio.paused && !audioPlayerVisible) {
+        mp.classList.add('active');
+      } else {
+        mp.classList.remove('active');
+      }
+    }
+
+    const audioPlayerEl = document.getElementById('audioPlayer');
+    if (audioPlayerEl) {
+      const mpObs = new IntersectionObserver(entries => {
+        audioPlayerVisible = entries[0].isIntersecting;
+        updateMiniPlayer();
+      }, { threshold: 0.3 });
+      mpObs.observe(audioPlayerEl);
+    }
+  </script>
+</body>
+</html>
