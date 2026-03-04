@@ -87,8 +87,10 @@ function buildSolarSystem() {
 
   const size = 480;
   const cx = size / 2, cy = size / 2;
-  sys.style.width = size + 'px';
-  sys.style.height = size + 'px';
+  // Do NOT force width/height — CSS controls the actual rendered size
+  // Read the actual rendered size to scale badge positions correctly
+  const actualSize = sys.getBoundingClientRect().width || size;
+  let scale = actualSize / size;
   orbitSvg.setAttribute('viewBox', `0 0 ${size} ${size}`);
 
   // Heptagonal orbit path helper
@@ -203,6 +205,9 @@ function buildSolarSystem() {
     const dt = Math.min((now - lastTime) / 1000, 0.05);
     lastTime = now;
 
+    // Recalculate scale each frame so badges stay correct after resize
+    scale = (sys.getBoundingClientRect().width || size) / size;
+
     // Slowly rotate center heptagon
     centerAngle = (centerAngle + 4 * dt) % 360;
     if (centerHept) {
@@ -223,8 +228,9 @@ function buildSolarSystem() {
         }
         const hw = badgeHalf[i].w || 36;
         const hh = badgeHalf[i].h || 14;
-        el.style.left = (x - hw) + 'px';
-        el.style.top  = (y - hh) + 'px';
+        // Multiply by scale so badges follow orbits on smaller screens
+        el.style.left = (x * scale - hw) + 'px';
+        el.style.top  = (y * scale - hh) + 'px';
       }
 
       // Vertex glow: proximity-based approach-fade + slow decay after peak
@@ -333,23 +339,42 @@ const hamburger = document.querySelector('.hamburger');
 const navLinksContainer = document.querySelector('.nav-links');
 const sections = document.querySelectorAll('section[id]');
 
+function closeNav() {
+  navLinksContainer.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  const spans = hamburger.querySelectorAll('span');
+  spans[0].style.transform = '';
+  spans[1].style.opacity = '';
+  spans[1].style.transform = '';
+  spans[2].style.transform = '';
+}
+
 hamburger?.addEventListener('click', () => {
   const open = navLinksContainer.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', open);
   const spans = hamburger.querySelectorAll('span');
   if (open) {
-    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+    // Animate 3 lines into an X
+    spans[0].style.transform = 'translateY(7px) rotate(45deg)';
     spans[1].style.opacity = '0';
-    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+    spans[1].style.transform = 'scaleX(0)';
+    spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
   } else {
-    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    closeNav();
   }
 });
 
 navLinksContainer?.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    navLinksContainer.classList.remove('open');
-    hamburger?.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
-  });
+  a.addEventListener('click', closeNav);
+});
+
+// Close nav when clicking outside
+document.addEventListener('click', e => {
+  if (navLinksContainer?.classList.contains('open') &&
+      !navLinksContainer.contains(e.target) &&
+      !hamburger?.contains(e.target)) {
+    closeNav();
+  }
 });
 
 window.addEventListener('scroll', () => {
@@ -561,13 +586,16 @@ const photoSystem = document.getElementById('heroPhotoSystem');
 const photoWrap   = document.getElementById('heroPhotoWrap');
 const heptEl      = document.getElementById('heptagonHero');
 
-if (photoSystem && photoWrap && window.innerWidth > 900) {
+if (photoSystem && photoWrap) {
   const hero    = document.getElementById('home');
   const heptSvg = heptEl ? heptEl.querySelector('svg') : null;
   const clip    = document.getElementById('heroPhotoClip');
   let overPhoto = false;
 
   hero.addEventListener('mousemove', e => {
+    // Check per-event so it works after resize and doesn't depend on load-time width
+    if (window.innerWidth <= 900) return;
+
     const sysRect   = photoSystem.getBoundingClientRect();
     const wrapRect  = photoWrap.getBoundingClientRect();
 
@@ -1256,7 +1284,7 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
     slot.innerHTML = `<img src="${prize.src}" alt="${prize.name}" draggable="false"><span class="inv-name">${prize.name}</span>`;
     slot.title = 'Drag to release!';
     slot.addEventListener('mousedown', e => startDragFromInventory(e, prize, slot));
-    slot.addEventListener('touchstart', e => startDragFromInventory(e, prize, slot), {passive:true});
+    slot.addEventListener('touchstart', e => startDragFromInventory(e, prize, slot), {passive:false});
     invSlots.appendChild(slot);
 
     // Green flash on canvas
@@ -1266,6 +1294,9 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
 
   // ── Physics playground ──
   const overlay = document.getElementById('physicsOverlay');
+  // Use body as actual parent for phys objects to avoid stacking context traps
+  // physicsOverlay is kept as reference for bounds but objects go on body
+  const physParent = document.body;
   const physObjects = [];
   let reverseTimeout = null;
 
@@ -1273,7 +1304,16 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
     e.preventDefault();
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    spawnPhysObject(prize, clientX, clientY, slotEl);
+    const obj = spawnPhysObject(prize, clientX, clientY, slotEl);
+    if (obj) {
+      obj.dragging = true;
+      obj.vx = 0; obj.vy = 0;
+      // dragOff = cursor - obj.topLeft so object doesn't jump when moved
+      // obj spawns centered on cursor: obj.x = clientX - PW/2, obj.y = clientY - PH/2
+      // so dragOffX = clientX - obj.x = PW/2
+      obj.dragOffX = clientX - obj.x;
+      obj.dragOffY = clientY - obj.y;
+    }
   }
 
   function spawnPhysObject(prize, startX, startY, slotEl) {
@@ -1286,7 +1326,9 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
     el.style.left = (startX - PW/2) + 'px';
     el.style.top  = (startY - PH/2) + 'px';
     el.innerHTML = `<img src="${prize.src}" alt="${prize.name}" draggable="false">`;
-    overlay.appendChild(el);
+    physParent.appendChild(el);
+    el.style.position = 'fixed';
+    el.style.zIndex = '2147483640';
 
     const obj = {
       el, prize,
@@ -1305,6 +1347,7 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
     if (slotEl) slotEl.remove();
     applyEntryEffect(obj);
     setupObjDrag(obj);
+    return obj;
   }
 
   function getPrizeDisplaySize(effect, imgEl) {
@@ -1348,6 +1391,8 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
     }
     function onMove(e) {
       if (!obj.dragging) return;
+      // Prevent page scroll while dragging on touch
+      if (e.cancelable) e.preventDefault();
       const cx = e.touches ? e.touches[0].clientX : e.clientX;
       const cy = e.touches ? e.touches[0].clientY : e.clientY;
       const nx = cx - obj.dragOffX;
@@ -1374,9 +1419,10 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
       }
     }
     obj.el.addEventListener('mousedown',  onDown);
-    obj.el.addEventListener('touchstart', onDown, {passive:true});
+    // passive:false so we can preventDefault() in onMove to block scroll during drag
+    obj.el.addEventListener('touchstart', onDown, {passive:false});
     window.addEventListener('mousemove',  onMove);
-    window.addEventListener('touchmove',  onMove, {passive:true});
+    window.addEventListener('touchmove',  onMove, {passive:false});
     window.addEventListener('mouseup',    onUp);
     window.addEventListener('touchend',   onUp);
   }
@@ -1555,7 +1601,9 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
       transition:opacity 0.35s, transform 0.35s;transform:scale(1)`;
     stamp.innerHTML = `<img src="${obj.prize.src}" draggable="false"
       style="width:100%;height:100%;object-fit:cover;filter:hue-rotate(${Math.random()*360}deg) saturate(1.8)">`;
-    overlay.appendChild(stamp);
+    physParent.appendChild(stamp);
+    stamp.style.position = 'fixed';
+    stamp.style.zIndex = '2147483640';
     requestAnimationFrame(() => { stamp.style.opacity = '0'; stamp.style.transform = 'scale(0.6)'; });
     setTimeout(() => stamp.remove(), 380);
   }
@@ -1571,7 +1619,9 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
       background:linear-gradient(to right, rgba(255,255,255,0.7), transparent);
       transform:rotate(${angle}deg);transform-origin:left center;
       pointer-events:none;z-index:9499;transition:opacity 0.2s`;
-    overlay.appendChild(line);
+    physParent.appendChild(line);
+    line.style.position = 'fixed';
+    line.style.zIndex = '2147483640';
     setTimeout(() => { line.style.opacity = '0'; }, 60);
     setTimeout(() => line.remove(), 280);
   }
@@ -1650,7 +1700,9 @@ document.querySelectorAll('.exp-tab').forEach(tab => {
         border-radius:50%;overflow:hidden;pointer-events:none;z-index:9498;
         opacity:0.8;transition:all 0.5s ease-out;`;
       ghost.innerHTML = `<img src="${obj.prize.src}" draggable="false" style="width:100%;height:100%;object-fit:cover;">`;
-      overlay.appendChild(ghost);
+      physParent.appendChild(ghost);
+      ghost.style.position = 'fixed';
+      ghost.style.zIndex = '2147483640';
       requestAnimationFrame(() => {
         ghost.style.left = (tx - ghostSize/2) + 'px';
         ghost.style.top  = (ty - ghostSize/2) + 'px';

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Michael Austin Tang | IT Student</title>
   <meta name="description" content="Portfolio of Michael Austin Tang, IT vocational student with skills in music production, photo editing, and technology." />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -62,17 +62,17 @@
   <!-- NAV -->
   <nav>
     <a href="#home" class="nav-logo">MAT<span>.</span><span class="nav-eq" id="navEq" aria-hidden="true"><span></span><span></span><span></span><span></span></span></a>
-    <ul class="nav-links">
-      <li><a href="#home" class="active">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Experience</a></li>
-      <li><a href="#contact" class="nav-cta">Contact</a></li>
-    </ul>
     <button class="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </nav>
+  <ul class="nav-links">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Experience</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
 
   <!-- HERO -->
   <section id="home">
@@ -919,7 +919,6 @@
       </div>
     </div>
     <!-- Physics playground overlay -->
-    <div id="physicsOverlay"></div>
   </section>
   <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
     <svg viewBox="0 0 24 24" width="20" height="20">
@@ -972,6 +971,22 @@
     </div>
   </div>
 
+  <!-- Mobile canvas resize: must run BEFORE main.js reads canvas.width -->
+  <script>
+    (function() {
+      const canvas = document.getElementById('clawCanvas');
+      if (!canvas) return;
+      // 90vw max, capped at 420px
+      const maxW = Math.min(420, Math.round(window.innerWidth * 0.90));
+      if (maxW < 420) {
+        const ratio = maxW / 420;
+        canvas.width  = maxW;
+        canvas.height = Math.round(520 * ratio);
+        canvas.style.width  = maxW + 'px';
+        canvas.style.height = Math.round(520 * ratio) + 'px';
+      }
+    })();
+  </script>
   <script src="js/main.js"></script>
   <script>
     window.addEventListener('load', () => {
@@ -1205,5 +1220,6 @@
       mpObs.observe(audioPlayerEl);
     }
   </script>
+  <div id="physicsOverlay"></div>
 </body>
 </html>
